@@ -5,6 +5,10 @@ import Heading from 'YesterTech/Heading'
 
 function CheckoutBilling({ onSubmit }) {
   const [sameAsBilling, setSameAsBilling] = useState(false)
+  const [shippingName, setShippingName] = useState(null)
+  const [shippingAddress, setShippingAddress] = useState(null)
+  const [billingName, setBillingName] = useState(null)
+  const [billingAddress, setBillingAddress] = useState(null)
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -31,6 +35,10 @@ function CheckoutBilling({ onSubmit }) {
             type="text"
             required
             name="billingName"
+            value={billingName}
+            onChange={event => {
+              setBillingName(event.target.value)
+            }}
             autoComplete="off"
           />
         </div>
@@ -40,6 +48,10 @@ function CheckoutBilling({ onSubmit }) {
             id="billing:address"
             type="text"
             required
+            value={billingAddress}
+            onChange={event => {
+              setBillingAddress(event.target.value)
+            }}
             name="billingAddress"
           />
         </div>
@@ -64,6 +76,10 @@ function CheckoutBilling({ onSubmit }) {
             type="text"
             required
             name="shippingName"
+            value={sameAsBilling ? billingName : shippingName}
+            onChange={event => {
+              setShippingName(event.target.value)
+            }}
             autoComplete="off"
           />
         </div>
@@ -74,6 +90,10 @@ function CheckoutBilling({ onSubmit }) {
             type="text"
             required
             name="shippingAddress"
+            value={sameAsBilling ? billingAddress : shippingAddress}
+            onChange={event => {
+              setShippingAddress(event.target.value)
+            }}
             autoComplete="off"
           />
         </div>

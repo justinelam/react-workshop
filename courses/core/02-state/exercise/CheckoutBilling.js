@@ -52,8 +52,12 @@ function CheckoutBilling({ onSubmit }) {
         </Heading>
 
         <label>
-          <input type="checkbox" onChange={changeSameBilling} /> Same
-          as Billing
+          <input
+            type="checkbox"
+            defaultValue={sameAsBilling}
+            onChange={changeSameBilling}
+          />{' '}
+          Same as Billing
         </label>
         {!sameAsBilling && (
           <div className="spacing">
