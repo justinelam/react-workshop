@@ -1,20 +1,24 @@
 import React, { useState } from 'react'
 import { MdShoppingCart } from 'react-icons/md'
-import serializeForm from 'form-serialize'
 import Heading from 'YesterTech/Heading'
 
 function CheckoutBilling({ onSubmit }) {
   const [sameAsBilling, setSameAsBilling] = useState(false)
-  const [shippingName, setShippingName] = useState(null)
-  const [shippingAddress, setShippingAddress] = useState(null)
-  const [billingName, setBillingName] = useState(null)
-  const [billingAddress, setBillingAddress] = useState(null)
+  const [shippingName, setShippingName] = useState('')
+  const [shippingAddress, setShippingAddress] = useState('')
+  const [billingName, setBillingName] = useState('')
+  const [billingAddress, setBillingAddress] = useState('')
 
   function handleSubmit(event) {
     event.preventDefault()
-    // When the fields are stored in state above, this fields variable can just be
-    // an object filled with the field states. We don't need `serializeForm` anymore
-    const fields = serializeForm(event.target, { hash: true })
+    const fields = {
+      billingName,
+      billingAddress,
+      shippingName: sameAsBilling ? billingName : shippingName,
+      shippingAddress: sameAsBilling
+        ? billingAddress
+        : shippingAddress
+    }
     onSubmit(sameAsBilling, fields)
   }
 
@@ -74,6 +78,7 @@ function CheckoutBilling({ onSubmit }) {
             type="text"
             required
             name="shippingName"
+            disabled={sameAsBilling}
             value={sameAsBilling ? billingName : shippingName}
             onChange={event => {
               setShippingName(event.target.value)
@@ -88,6 +93,7 @@ function CheckoutBilling({ onSubmit }) {
             type="text"
             required
             name="shippingAddress"
+            disabled={sameAsBilling}
             value={sameAsBilling ? billingAddress : shippingAddress}
             onChange={event => {
               setShippingAddress(event.target.value)
